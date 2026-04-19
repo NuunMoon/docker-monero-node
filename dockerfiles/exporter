@@ -1,4 +1,4 @@
-FROM golang:noble AS og
+FROM golang:trixie AS og
 
 # Install exporter from Github
 RUN CGO_ENABLED=0 go install github.com/cirocosta/monero-exporter/cmd/monero-exporter@master
