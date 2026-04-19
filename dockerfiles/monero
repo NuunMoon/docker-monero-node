@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 AS og
+FROM ubuntu:noble AS og
 
 WORKDIR /opt/monero
 
@@ -17,7 +17,7 @@ COPY ./dockerfiles/files/monerod/install.sh .
 RUN bash install.sh
 
 # Copy to fresh Ubuntu image to reduce size
-FROM ubuntu:22.04
+FROM ubuntu:noble
 COPY --from=og /usr/local/bin/monerod /usr/local/bin/monerod
 COPY --from=og /usr/local/bin/monero-wallet-cli /usr/local/bin/monero-wallet-cli
 COPY --from=og /usr/local/bin/monero-wallet-rpc /usr/local/bin/monero-wallet-rpc

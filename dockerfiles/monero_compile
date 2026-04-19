@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 AS og
+FROM ubuntu:noble AS og
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -22,7 +22,7 @@ RUN git submodule update --init --force
 # Compile monero
 RUN make -j$THREADS
 
-FROM ubuntu:22.04
+FROM ubuntu:noble
 
 WORKDIR /data
 
