@@ -1,10 +1,10 @@
-FROM golang:bullseye AS OG
+FROM golang:noble AS og
 
 # Install exporter from Github
-RUN go install github.com/cirocosta/monero-exporter/cmd/monero-exporter@master
+RUN CGO_ENABLED=0 go install github.com/cirocosta/monero-exporter/cmd/monero-exporter@master
 
-# Copy installed binary to fresh Ubuntu image
-FROM ubuntu:22.04
-COPY --from=OG /go/bin/monero-exporter /usr/local/bin/monero-exporter
+# Copy installed binary to a scratch image
+FROM scratch
+COPY --from=og /go/bin/monero-exporter /usr/local/bin/monero-exporter
 
 ENTRYPOINT [ "monero-exporter" ]
