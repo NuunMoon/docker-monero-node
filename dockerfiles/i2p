@@ -4,10 +4,12 @@ ARG TARGETARCH
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y wget sudo
-
-RUN set -ex; \
-    wget "https://github.com/PurpleI2P/i2pd/releases/download/2.59.0/i2pd_2.59.0-1trixie1_${TARGETARCH}.deb" -O i2pd.deb -q && \
+# Combine update and install to ensure dependencies can be found
+RUN apt-get update && apt-get install -y wget && \
+    set -ex; \
+    # Using jammy package as it's more compatible with Noble than Trixie
+    wget "https://github.com/PurpleI2P/i2pd/releases/download/2.54.0/i2pd_2.54.0-1jammy1_${TARGETARCH}.deb" -O i2pd.deb -q && \
+    apt-get update && \
     apt-get install -y ./i2pd.deb && \
     rm i2pd.deb && \
     rm -rf /var/lib/apt/lists/*
